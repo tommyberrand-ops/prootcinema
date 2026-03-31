@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)file:///home/dedou/Bureau/download/journal-studio/film%20studio/index.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEMA STUDIO - Générateur de Courts-Métrages</title>
+    <link rel="stylesheet" href="./CINEMA STUDIO - Générateur de Courts-Métrages_files/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Cinema', 'Helvetica Neue', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0a1a, #050510);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* HEADER CINEMA */
+        header {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(255,215,0,0.1));
+            border-radius: 25px;
+            padding: 25px 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,215,0,0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .cinema-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo-area i {
+            font-size: 3em;
+            color: #ffd700;
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
+        }
+        
+        .logo-area h1 {
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #ffd700, #ff6b6b, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+        
+        .director-badge {
+            background: rgba(0,0,0,0.6);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border-left: 3px solid #ffd700;
+        }
+        
+        .director-badge i {
+            color: #ffd700;
+            margin-right: 8px;
+        }
+        
+        .version {
+            margin-top: 20px;
+            color: #aaa;
+            font-size: 0.8em;
+            text-align: center;
+            border-top: 1px solid rgba(255,215,0,0.2);
+            padding-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 25px;
+        }
+        
+        /* CARTES CINEMA */
+        .card {
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .card-header {
+            padding: 18px 22px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(255,215,0,0.05));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .card-header i {
+            color: #ffd700;
+            font-size: 1.3em;
+        }
+        
+        .card-header h3 {
+            flex: 1;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 22px;
+        }
+        
+        /* FORMULAIRES */
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            color: #ffd700;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255,215,0,0.2);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+        
+        /* SECTION PERSONNAGES */
+        .characters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .character-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255,215,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .character-card.active {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(0,0,0,0.4));
+        }
+        
+        .character-card h4 {
+            color: #ffd700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-char {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .toggle-char input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        /* PLANS CAMÉRA */
+        .camera-plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .plan-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .plan-card.selected {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,0,0,0.4));
+        }
+        
+        .plan-card i {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .plan-card span {
+            font-size: 0.75em;
+        }
+        
+        /* ANGLES DE VUE */
+        .angle-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .angle-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.75em;
+        }
+        
+        .angle-item.selected {
+            border-color: #ffd700;
+            background: rgba(255,215,0,0.2);
+        }
+        
+        /* MÉTÉO & PÉRIODE */
+        .meteo-grid, .periode-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .meteo-item, .periode-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .meteo-item.selected, .periode-item.selected {
+            border-color: #ffd700;
+            background: rgba(255,215,0,0.2);
+        }
+        
+        /* BOUTONS */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            color: #000;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255,215,0,0.4);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        /* COLONNE DROITE */
+        .right-col {
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 22px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .result-header h3 i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .icon-btn:hover {
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            transform: scale(1.05);
+        }
+        
+        .prompt-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85em;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .prompt-display {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 22px;
+            min-height: 500px;
+            max-height: 600px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.7;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+        
+        .info-box {
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 4px solid #ffd700;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .recap {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .recap h4 {
+            color: #ffd700;
+            margin-bottom: 12px;
+        }
+        
+        .tips {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 18px;
+        }
+        
+        .tips h4 {
+            color: #ffd700;
+            margin-bottom: 12px;
+        }
+        
+        .tips ul {
+            list-style: none;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips li i {
+            color: #ffd700;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.8em;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,215,0,0.1);
+        }
+        
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            border-radius: 3px;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .characters-grid {
+                grid-template-columns: 1fr;
+            }
+            .camera-plans, .angle-grid, .meteo-grid, .periode-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cinema-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .camera-plans, .angle-grid, .meteo-grid, .periode-grid {
+                grid-template-columns: 1fr;
+            }
+            .prompt-tabs {
+                flex-wrap: wrap;
+            }
+            .tab-btn {
+                font-size: 0.7em;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER CINEMA -->
+        <header>
+            <div class="cinema-header">
+                <div class="logo-area">
+                    <i class="fas fa-film"></i>
+                    <h1>CINEMA STUDIO</h1>
+                </div>
+                <div class="director-badge">
+                    <i class="fas fa-clapperboard"></i>
+                    <span>James Cameron • Spielberg • Nolan • Villeneuve</span>
+                </div>
+            </div>
+            <div class="version">v1.0 - Courts-Métrages Cinématographiques | 3 Parties de 6 secondes | Ultra-réaliste 8K</div>
+        </header>
+
+        <div class="main-content">
+            <!-- COLONNE GAUCHE - PARAMÈTRES -->
+            <div class="left-col">
+                
+                <!-- SECTION 1 : PERSONNAGES (1 ou 2) -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-users"></i>
+                        <h3>PERSONNAGES</h3>
+                        <span class="badge">1 OU 2 ACTEURS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="characters-grid">
+                            <!-- PERSONNAGE 1 -->
+                            <div class="character-card active" id="char1Card">
+                                <h4><i class="fas fa-user-circle"></i> PERSONNAGE 1</h4>
+                                <div class="toggle-char">
+                                    <label class="switch-label">Activer</label>
+                                    <input type="checkbox" id="enableChar1" checked="">
+                                </div>
+                                <div class="input-group" style="margin-top: 10px;">
+                                    <input type="text" id="char1Name" placeholder="Nom du personnage" value="ELLE">
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char1Desc" rows="2" placeholder="Description physique, tenue, particularités...">Femme magnifique, cheveux bruns longs, yeux verts, tenue élégante noire</textarea>
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char1Dialogue1" rows="2" placeholder="Dialogue Partie 1 (6s)">Je ne pensais pas te retrouver ici...</textarea>
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char1Dialogue2" rows="2" placeholder="Dialogue Partie 2 (6s)">Tout a changé depuis cette nuit.</textarea>
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char1Dialogue3" rows="2" placeholder="Dialogue Partie 3 (6s)">Il est trop tard maintenant.</textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- PERSONNAGE 2 -->
+                            <div class="character-card" id="char2Card">
+                                <h4><i class="fas fa-user-circle"></i> PERSONNAGE 2</h4>
+                                <div class="toggle-char">
+                                    <label class="switch-label">Activer</label>
+                                    <input type="checkbox" id="enableChar2">
+                                </div>
+                                <div class="input-group" style="margin-top: 10px;">
+                                    <input type="text" id="char2Name" placeholder="Nom du personnage" value="LUI">
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char2Desc" rows="2" placeholder="Description physique, tenue, particularités...">Homme mystérieux, regard intense, costume sombre</textarea>
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char2Dialogue1" rows="2" placeholder="Dialogue Partie 1 (6s)">Je t'ai cherchée partout.</textarea>
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char2Dialogue2" rows="2" placeholder="Dialogue Partie 2 (6s)">Rien ne nous arrêtera.</textarea>
+                                </div>
+                                <div class="input-group">
+                                    <textarea id="char2Dialogue3" rows="2" placeholder="Dialogue Partie 3 (6s)">Viens avec moi.</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2 : ACTION & SUJET -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-theater-masks"></i>
+                        <h3>ACTION &amp; SUJET</h3>
+                        <span class="badge">SCÉNARIO</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label><i class="fas fa-book"></i> TITRE / CONCEPT</label>
+                            <input type="text" id="movieTitle" value="LA RENCONTRE" placeholder="Titre du court-métrage">
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-align-left"></i> SYNOPSIS / CONTEXTE</label>
+                            <textarea id="synopsis" rows="3" placeholder="Décrivez l&#39;histoire, l&#39;ambiance, l&#39;enjeu...">Deux anciens amants se retrouvent par hasard dans une gare déserte. Les non-dits refont surface. Une dernière chance ou un dernier adieu ?</textarea>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-bolt"></i> ACTION PRINCIPALE</label>
+                            <select id="actionType">
+                                <option value="drame">🎭 Drame / Émotion</option>
+                                <option value="amour">💖 Romance / Rencontre</option>
+                                <option value="action">💥 Action / Combat</option>
+                                <option value="mystere">🔍 Mystère / Suspense</option>
+                                <option value="science">🚀 Science-fiction</option>
+                                <option value="aventure">🏔️ Aventure / Voyage</option>
+                                <option value="horreur">🩸 Horreur / Thriller</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3 : PLANS CAMÉRA (3 PARTIES) -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-video"></i>
+                        <h3>PLANS CAMÉRA (3 PARTIES)</h3>
+                        <span class="badge">CINÉMA</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>🎬 PARTIE 1 (6s) - PLAN</label>
+                            <div class="camera-plans" id="planPart1">
+                                <div class="plan-card" data-plan="plan_large"><i class="fas fa-arrows-alt"></i><span>PLAN LARGE</span></div>
+                                <div class="plan-card selected" data-plan="plan_moyen"><i class="fas fa-user"></i><span>PLAN MOYEN</span></div>
+                                <div class="plan-card" data-plan="gros_plan"><i class="fas fa-eye"></i><span>GROS PLAN</span></div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>🎥 PARTIE 2 (6s) - PLAN</label>
+                            <div class="camera-plans" id="planPart2">
+                                <div class="plan-card" data-plan="plan_large"><i class="fas fa-arrows-alt"></i><span>PLAN LARGE</span></div>
+                                <div class="plan-card" data-plan="plan_moyen"><i class="fas fa-user"></i><span>PLAN MOYEN</span></div>
+                                <div class="plan-card selected" data-plan="gros_plan"><i class="fas fa-eye"></i><span>GROS PLAN</span></div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>📸 PARTIE 3 (6s) - PLAN</label>
+                            <div class="camera-plans" id="planPart3">
+                                <div class="plan-card" data-plan="plan_large"><i class="fas fa-arrows-alt"></i><span>PLAN LARGE</span></div>
+                                <div class="plan-card selected" data-plan="plan_moyen"><i class="fas fa-user"></i><span>PLAN MOYEN</span></div>
+                                <div class="plan-card" data-plan="gros_plan"><i class="fas fa-eye"></i><span>GROS PLAN</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 4 : ANGLES DE VUE -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-camera-retro"></i>
+                        <h3>ANGLES DE VUE</h3>
+                        <span class="badge">COMPOSITION</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="angle-grid" id="angleGrid">
+                            <div class="angle-item" data-angle="face">🎯 FACE (frontal)</div>
+                            <div class="angle-item selected" data-angle="3-4">🎬 3/4 (profil léger)</div>
+                            <div class="angle-item" data-angle="profil">👤 PROFIL (de côté)</div>
+                            <div class="angle-item" data-angle="plongeant">⬇️ PLONGEANT (vue du dessus)</div>
+                            <div class="angle-item" data-angle="contre-plongeant">⬆️ CONTRE-PLONGEANT (vue du bas)</div>
+                            <div class="angle-item" data-angle="americain">🎥 AMÉRICAIN (cuisse)</div>
+                            <div class="angle-item" data-angle="italien">🇮🇹 ITALIEN (genoux)</div>
+                            <div class="angle-item" data-angle="macro">🔬 MACRO (détail)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 5 : MÉTÉO & ATMOSPHÈRE -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-cloud-sun"></i>
+                        <h3>MÉTÉO &amp; ATMOSPHÈRE</h3>
+                        <span class="badge">AMBIANCE</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="meteo-grid" id="meteoGrid">
+                            <div class="meteo-item" data-meteo="ensoleille">☀️ ENSOLEILLÉ</div>
+                            <div class="meteo-item" data-meteo="nuageux">☁️ NUAGEUX</div>
+                            <div class="meteo-item" data-meteo="pluie">🌧️ PLUIE</div>
+                            <div class="meteo-item" data-meteo="orage">⛈️ ORAGE</div>
+                            <div class="meteo-item" data-meteo="neige">❄️ NEIGE</div>
+                            <div class="meteo-item selected" data-meteo="brume">🌫️ BRUME / FUMÉE</div>
+                            <div class="meteo-item" data-meteo="vent">💨 VENT</div>
+                            <div class="meteo-item" data-meteo="coucher">🌅 COUCHER DE SOLEIL</div>
+                            <div class="meteo-item" data-meteo="nuit">🌙 NUIT ÉTOILÉE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 6 : PÉRIODE JOUR/NUIT -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>PÉRIODE</h3>
+                        <span class="badge">LUMIÈRE</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="periode-grid" id="periodeGrid">
+                            <div class="periode-item" data-periode="aube">🌅 AUBE / LEVER DE SOLEIL</div>
+                            <div class="periode-item" data-periode="matin">☀️ MATIN (lumière douce)</div>
+                            <div class="periode-item selected" data-periode="midi">🌞 MIDI (lumière dure)</div>
+                            <div class="periode-item" data-periode="apres-midi">⛅ APRÈS-MIDI (lumière dorée)</div>
+                            <div class="periode-item" data-periode="coucher">🌇 COUCHER DE SOLEIL (golden hour)</div>
+                            <div class="periode-item" data-periode="crepuscule">🌙 CRÉPUSCULE (blue hour)</div>
+                            <div class="periode-item" data-periode="nuit">🌃 NUIT (éclairage artificiel)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 7 : LIEU / DÉCOR -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>LIEU &amp; DÉCOR</h3>
+                        <span class="badge">SCÈNE</span>
+                    </div>
+                    <div class="card-body">
+                        <select id="lieuType" class="full-width">
+                            <option value="urbain">🏙️ Urbain / Ville (rues, immeubles)</option>
+                            <option value="nature">🌲 Nature / Forêt / Montagne</option>
+                            <option value="plage">🏖️ Plage / Océan</option>
+                            <option value="interieur">🏠 Intérieur / Appartement</option>
+                            <option value="industriel">🏭 Industriel / Usine / Entrepôt</option>
+                            <option value="vintage">📻 Vintage / Années 50-80</option>
+                            <option value="futuriste">🚀 Futuriste / Cyberpunk</option>
+                            <option value="fantastique">✨ Fantastique / Onirique</option>
+                        </select>
+                        <div class="input-group" style="margin-top: 15px;">
+                            <label><i class="fas fa-pen"></i> DÉCOR PERSONNALISÉ</label>
+                            <textarea id="customLieu" rows="2" placeholder="Ex: une gare désaffectée, néons vacillants, bancs usés...">Une gare désaffectée, lumières tamisées, bancs rouillés, affiches déchirées</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 8 : DÉTAILS RÉALISTES ULTRA-HD -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-eye"></i>
+                        <h3>RÉALISME CINÉMA</h3>
+                        <span class="badge">8K IMAX</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-grid" style="display: grid; grid-template-columns: repeat(2,1fr); gap: 12px;">
+                            <label><input type="checkbox" id="realisticSkin" checked=""> 🧬 Peau (pores, veines, grain)</label>
+                            <label><input type="checkbox" id="realisticEyes" checked=""> 👁️ Yeux 8K (iris, vaisseaux, larmes)</label>
+                            <label><input type="checkbox" id="realisticLips" checked=""> 💋 Lèvres (ridules, brillant, humidité)</label>
+                            <label><input type="checkbox" id="realisticBreathing" checked=""> 🌬️ Respiration (thorax, micro-mouvements)</label>
+                            <label><input type="checkbox" id="realisticMicroExpressions" checked=""> 😊 Micro-expressions (tics, émotions)</label>
+                            <label><input type="checkbox" id="realisticHair" checked=""> 💇 Cheveux (mouvement, reflets, mèches)</label>
+                            <label><input type="checkbox" id="realisticTexture" checked=""> 🎨 Textures (tissus, métaux, matériaux)</label>
+                            <label><input type="checkbox" id="realisticLight" checked=""> 💡 Éclairage cinéma (Rembrandt, contre-jour)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 9 : EFFETS CINÉMATOGRAPHIQUES -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h3>EFFETS CINÉMA</h3>
+                        <span class="badge">POST-PRODUCTION</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-grid" style="display: grid; grid-template-columns: repeat(2,1fr); gap: 12px;">
+                            <label><input type="checkbox" id="effectGrain" checked=""> 🎞️ Grain de film argentique</label>
+                            <label><input type="checkbox" id="effectFlare"> ✨ Flare / Lens flare</label>
+                            <label><input type="checkbox" id="effectBokeh"> 🔘 Bokeh / Flou d'arrière-plan</label>
+                            <label><input type="checkbox" id="effectChromatic"> 🌈 Aberration chromatique</label>
+                            <label><input type="checkbox" id="effectVignette"> 🎭 Vignettage (coins assombris)</label>
+                            <label><input type="checkbox" id="effectSlowmo"> ⏱️ Ralenti (fin de partie)</label>
+                            <label><input type="checkbox" id="effectTransition"> 🎬 Transition fondue enchaînée</label>
+                            <label><input type="checkbox" id="effectColorGrading"> 🎨 Color grading (teinte cinéma)</label>
+                        </div>
+                        <div class="input-group" style="margin-top: 15px;">
+                            <label><i class="fas fa-music"></i> ATMOSPHÈRE SONORE</label>
+                            <select id="soundAtmo">
+                                <option value="silence">🔇 Silence</option>
+                                <option value="nervosite">🎻 Musique dramatique / tension</option>
+                                <option value="romantique">🎹 Piano romantique</option>
+                                <option value="action">🥁 Percussions / action</option>
+                                <option value="mystere">🌫️ Ambiance mystérieuse</option>
+                                <option value="nature">🌿 Sons naturels (vent, oiseaux)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOUTON GÉNÉRER -->
+                <button class="generate-btn" id="generatePrompt">
+                    <i class="fas fa-clapperboard"></i> GÉNÉRER LE SCÉNARIO TECHNIQUE
+                </button>
+            </div>
+
+            <!-- COLONNE DROITE - RÉSULTAT -->
+            <div class="right-col">
+                <div class="result-header">
+                    <h3><i class="fas fa-film"></i> SCÉNARIO TECHNIQUE</h3>
+                    <div class="result-actions">
+                        <button class="icon-btn" id="copyPrompt"><i class="fas fa-copy"></i></button>
+                        <button class="icon-btn" id="clearPrompt"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                
+                <div class="prompt-tabs">
+                    <button class="tab-btn active" id="tabFull">SCÉNARIO COMPLET</button>
+                    <button class="tab-btn" id="tabPart1">PARTIE 1 (6s)</button>
+                    <button class="tab-btn" id="tabPart2">PARTIE 2 (6s)</button>
+                    <button class="tab-btn" id="tabPart3">PARTIE 3 (6s)</button>
+                </div>
+                
+                <div class="prompt-display" id="promptDisplay">🎬 PARTIE 1 - INSTALLATION (6 secondes) - PLAN MOYEN<br><br>⏱️ DURÉE : 6 secondes<br>📹 PLAN : PLAN MOYEN - cadre taille, personnages visibles de la tête aux hanches<br>🎥 ANGLE : 3/4 - léger profil, dynamique, composition classique du cinéma<br>🌍 LIEU : Une gare désaffectée, lumières tamisées, bancs rouillés, affiches déchirées<br>🌤️ MÉTÉO : 🌫️ BRUME - mystère, flou, suspense, ambiance onirique<br>⏰ PÉRIODE : 🌞 MIDI - lumière zénithale, ombres courtes, contraste fort<br>🎭 GENRE : drame psychologique, émotion brute, non-dits<br><br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br><br>📖 SYNOPSIS (contexte) :<br>Deux anciens amants se retrouvent par hasard dans une gare déserte. Les non-dits refont surface. Une dernière chance ou un dernier adieu ?<br><br><br>👤 ELLE :<br>- Femme magnifique, cheveux bruns longs, yeux verts, tenue élégante noire<br>- DIALOGUE (synchronisation labiale) : "Je ne pensais pas te retrouver ici..."<br><br><br>🎬 MISE EN SCÈNE :<br>- Établissement du décor et de l'ambiance<br>- Présentation des personnages dans leur environnement<br>- Premier regard, première émotion<br>- Rythme : lent, contemplation<br>- Musique : atmosphérique, introductive<br><br>🎨 TEXTURE DE PEAU CINÉMATOGRAPHIQUE :<br>- Peau hyper réaliste avec pores visibles à différentes échelles<br>- Sous-tons de peau multiples, transparence aux tempes (veines visibles)<br>- Circulation sanguine donnant des nuances changeantes selon l'éclairage<br>- Grain de peau naturel, pas de lissage artificiel<br><br>👁️ YEUX ULTRA-RÉALISTES 8K (signature James Cameron) :<br>- Iris hyper détaillés avec motifs complexes uniques<br>- Film lacrymal humide recouvrant l'œil (les yeux ne sont JAMAIS secs)<br>- Vaisseaux sanguins très fins visibles dans le blanc de l'œil<br>- Saccades oculaires : micro-mouvements involontaires<br>- Reflets multiples (catchlights) nets et naturels<br>- Cils individuels, courbés naturellement, avec différentes longueurs<br><br>💋 LÈVRES VIVANTES (détail macro) :<br>- Texture naturelle avec ridules verticales visibles<br>- La peau des lèvres est plus fine et légèrement translucide sur les bords<br>- Reflets humides qui changent selon l'angle (salive naturelle)<br>- Léger brillant aux commissures quand la bouche s'ouvre<br><br>🌬️ RESPIRATION ET VIE (souffle organique) :<br>- Très léger mouvement de la cage thoracique (même à l'arrêt)<br>- Les épaules bougent imperceptiblement avec la respiration<br>- Le ventre se soulève très légèrement<br>- La respiration influence la posture de façon infime<br><br>😊 MICRO-EXPRESSIONS INVOLONTAIRES (émotions brutes) :<br>- Infime tressaillement de la paupière en battant des cils<br>- Pulsation sanguine très subtile visible aux tempes<br>- Légère dilatation des pupilles en fonction de l'émotion<br>- La peau s'étire et se comprime avec les expressions<br><br>💇 CHEVEUX VIVANTS (mouvement organique) :<br>- Mouvements naturels et subtils avec chaque geste<br>- Reflets lumineux qui bougent selon l'angle<br>- Quelques mèches libres qui encadrent le visage<br>- Interaction avec l'air, le vent, les mouvements<br><br>🎨 TEXTURES DES MATÉRIAUX (tissus, métaux, surfaces) :<br>- Vêtements : plis naturels, coutures visibles, texture du tissu<br>- Accessoires : reflets métalliques, rayures, patine du temps<br>- Environnement : murs texturés, surfaces usées, détails microscopiques<br><br>💡 ÉCLAIRAGE CINÉMATOGRAPHIQUE (style Deakins) :<br>- Éclairage Rembrandt doux : triangle de lumière sur la joue<br>- Source principale à 45°, ombres naturelles qui sculptent les volumes<br>- Reflets naturels dans les yeux qui donnent de la vie au regard<br>- La lumière révèle la texture de la peau, ne la gomme pas<br><br><br><br>🎨 EFFETS CINÉMATOGRAPHIQUES :<br>- 🎞️ Grain de film argentique (texture cinéma classique)<br><br><br>🎵 AMBIANCE SONORE : 🔇 Silence<br><br>🎯 OBJECTIF NARRATIF :<br>- Installer le contexte émotionnel<br>- Créer une attente, un mystère<br>- Introduire la tension ou la romance<br><br>TRANSITION : Fondue enchaînée vers la Partie 2<br><br>🎬 PARTIE 2 - DÉVELOPPEMENT (6 secondes) - GROS PLAN<br><br>⏱️ DURÉE : 6 secondes<br>📹 PLAN : GROS PLAN - cadre serré sur le visage, émotions intenses, détails du regard<br>🎥 ANGLE : 3/4 - léger profil, dynamique, composition classique du cinéma<br>🌤️ MÉTÉO : 🌫️ BRUME - mystère, flou, suspense, ambiance onirique<br><br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br><br><br>👤 ELLE :<br>- Femme magnifique, cheveux bruns longs, yeux verts, tenue élégante noire<br>- DIALOGUE (synchronisation labiale) : "Tout a changé depuis cette nuit."<br><br><br>🎬 MISE EN SCÈNE (direction d'acteurs) :<br>- Intensification de l'action ou de l'émotion<br>- Jeu des regards, non-dits, tension<br>- Mouvements plus marqués<br>- Rythme : accélération progressive<br>- Découverte d'un élément clé<br><br>EXPRESSIONS ET JEU :<br>- Micro-expressions traduisant les émotions internes<br>- Respiration plus rapide si tension<br>- Regards qui s'évitent ou se croisent intensément<br><br>🎨 TEXTURE DE PEAU CINÉMATOGRAPHIQUE :<br>- Peau hyper réaliste avec pores visibles à différentes échelles<br>- Sous-tons de peau multiples, transparence aux tempes (veines visibles)<br>- Circulation sanguine donnant des nuances changeantes selon l'éclairage<br>- Grain de peau naturel, pas de lissage artificiel<br><br>👁️ YEUX ULTRA-RÉALISTES 8K (signature James Cameron) :<br>- Iris hyper détaillés avec motifs complexes uniques<br>- Film lacrymal humide recouvrant l'œil (les yeux ne sont JAMAIS secs)<br>- Vaisseaux sanguins très fins visibles dans le blanc de l'œil<br>- Saccades oculaires : micro-mouvements involontaires<br>- Reflets multiples (catchlights) nets et naturels<br>- Cils individuels, courbés naturellement, avec différentes longueurs<br><br>💋 LÈVRES VIVANTES (détail macro) :<br>- Texture naturelle avec ridules verticales visibles<br>- La peau des lèvres est plus fine et légèrement translucide sur les bords<br>- Reflets humides qui changent selon l'angle (salive naturelle)<br>- Léger brillant aux commissures quand la bouche s'ouvre<br><br>🌬️ RESPIRATION ET VIE (souffle organique) :<br>- Très léger mouvement de la cage thoracique (même à l'arrêt)<br>- Les épaules bougent imperceptiblement avec la respiration<br>- Le ventre se soulève très légèrement<br>- La respiration influence la posture de façon infime<br><br>😊 MICRO-EXPRESSIONS INVOLONTAIRES (émotions brutes) :<br>- Infime tressaillement de la paupière en battant des cils<br>- Pulsation sanguine très subtile visible aux tempes<br>- Légère dilatation des pupilles en fonction de l'émotion<br>- La peau s'étire et se comprime avec les expressions<br><br>💇 CHEVEUX VIVANTS (mouvement organique) :<br>- Mouvements naturels et subtils avec chaque geste<br>- Reflets lumineux qui bougent selon l'angle<br>- Quelques mèches libres qui encadrent le visage<br>- Interaction avec l'air, le vent, les mouvements<br><br>🎨 TEXTURES DES MATÉRIAUX (tissus, métaux, surfaces) :<br>- Vêtements : plis naturels, coutures visibles, texture du tissu<br>- Accessoires : reflets métalliques, rayures, patine du temps<br>- Environnement : murs texturés, surfaces usées, détails microscopiques<br><br>💡 ÉCLAIRAGE CINÉMATOGRAPHIQUE (style Deakins) :<br>- Éclairage Rembrandt doux : triangle de lumière sur la joue<br>- Source principale à 45°, ombres naturelles qui sculptent les volumes<br>- Reflets naturels dans les yeux qui donnent de la vie au regard<br>- La lumière révèle la texture de la peau, ne la gomme pas<br><br><br><br>🎨 EFFETS CINÉMATOGRAPHIQUES :<br>- 🎞️ Grain de film argentique (texture cinéma classique)<br><br><br>🎵 AMBIANCE SONORE : 🔇 Silence<br><br>🎯 OBJECTIF NARRATIF :<br>- Faire monter la tension ou l'émotion<br>- Révéler un élément important<br>- Préparer le climax<br><br>TRANSITION : Montée en puissance vers le climax<br><br>🎬 PARTIE 3 - CLIMAX / RÉSOLUTION (6 secondes) - PLAN MOYEN<br><br>⏱️ DURÉE : 6 secondes<br>📹 PLAN : PLAN MOYEN - cadre taille, personnages visibles de la tête aux hanches<br>🎥 ANGLE : 3/4 - léger profil, dynamique, composition classique du cinéma<br><br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br><br><br>👤 ELLE :<br>- Femme magnifique, cheveux bruns longs, yeux verts, tenue élégante noire<br>- DIALOGUE (synchronisation labiale) : "Il est trop tard maintenant."<br><br><br>🎬 MISE EN SCÈNE (point culminant) :<br>- Apogée de l'action ou de l'émotion<br>- Révélation finale<br>- Dernier regard, dernier mot<br>- Rythme : climax, puis apaisement<br>- Mouvement ralenti pour accentuer l'émotion<br><br>EXPRESSIONS ET JEU (intensité maximale) :<br>- Larmes, sourire, colère, joie - selon le contexte<br>- Dernière micro-expression marquante<br>- Respiration finale, apaisement<br>- Le regard qui exprime tout<br><br>🎨 TEXTURE DE PEAU CINÉMATOGRAPHIQUE :<br>- Peau hyper réaliste avec pores visibles à différentes échelles<br>- Sous-tons de peau multiples, transparence aux tempes (veines visibles)<br>- Circulation sanguine donnant des nuances changeantes selon l'éclairage<br>- Grain de peau naturel, pas de lissage artificiel<br><br>👁️ YEUX ULTRA-RÉALISTES 8K (signature James Cameron) :<br>- Iris hyper détaillés avec motifs complexes uniques<br>- Film lacrymal humide recouvrant l'œil (les yeux ne sont JAMAIS secs)<br>- Vaisseaux sanguins très fins visibles dans le blanc de l'œil<br>- Saccades oculaires : micro-mouvements involontaires<br>- Reflets multiples (catchlights) nets et naturels<br>- Cils individuels, courbés naturellement, avec différentes longueurs<br><br>💋 LÈVRES VIVANTES (détail macro) :<br>- Texture naturelle avec ridules verticales visibles<br>- La peau des lèvres est plus fine et légèrement translucide sur les bords<br>- Reflets humides qui changent selon l'angle (salive naturelle)<br>- Léger brillant aux commissures quand la bouche s'ouvre<br><br>🌬️ RESPIRATION ET VIE (souffle organique) :<br>- Très léger mouvement de la cage thoracique (même à l'arrêt)<br>- Les épaules bougent imperceptiblement avec la respiration<br>- Le ventre se soulève très légèrement<br>- La respiration influence la posture de façon infime<br><br>😊 MICRO-EXPRESSIONS INVOLONTAIRES (émotions brutes) :<br>- Infime tressaillement de la paupière en battant des cils<br>- Pulsation sanguine très subtile visible aux tempes<br>- Légère dilatation des pupilles en fonction de l'émotion<br>- La peau s'étire et se comprime avec les expressions<br><br>💇 CHEVEUX VIVANTS (mouvement organique) :<br>- Mouvements naturels et subtils avec chaque geste<br>- Reflets lumineux qui bougent selon l'angle<br>- Quelques mèches libres qui encadrent le visage<br>- Interaction avec l'air, le vent, les mouvements<br><br>🎨 TEXTURES DES MATÉRIAUX (tissus, métaux, surfaces) :<br>- Vêtements : plis naturels, coutures visibles, texture du tissu<br>- Accessoires : reflets métalliques, rayures, patine du temps<br>- Environnement : murs texturés, surfaces usées, détails microscopiques<br><br>💡 ÉCLAIRAGE CINÉMATOGRAPHIQUE (style Deakins) :<br>- Éclairage Rembrandt doux : triangle de lumière sur la joue<br>- Source principale à 45°, ombres naturelles qui sculptent les volumes<br>- Reflets naturels dans les yeux qui donnent de la vie au regard<br>- La lumière révèle la texture de la peau, ne la gomme pas<br><br><br><br>🎨 EFFETS CINÉMATOGRAPHIQUES :<br>- 🎞️ Grain de film argentique (texture cinéma classique)<br><br><br>🎵 AMBIANCE SONORE : 🔇 Silence<br><br>🎯 OBJECTIF NARRATIF :<br>- Résoudre l'intrigue<br>- Marquer les esprits<br>- Laisser une émotion durable<br><br>FINALE :<br>- Freeze frame sur le dernier regard<br>- Fondu au noir progressif (2 secondes)<br>- Titre du film : "LA RENCONTRE"<br>- Générique de fin (optionnel)<br><br>📋 CONSIGNES DE RÉALISATION - COURTS-MÉTRAGES CINÉMA<br><br>1. CONTINUITÉ : Cohérence absolue entre les 3 parties<br>2. PLANS CAMÉRA : PLAN MOYEN → GROS PLAN → PLAN MOYEN<br>3. ANGLE DE VUE UNIFORME : 3/4 - léger profil, dynamique, composition classique du cinéma<br>4. SYNCHRONISATION LABIALE : Parfaite synchronisation des dialogues<br>5. RÉALISME ULTRA-HD : Respecter TOUTES les instructions de texture peau, yeux 8K, respiration<br>6. ÉCLAIRAGE : Cinématographique, style Deakins/Kaminski<br>7. ATMOSPHÈRE : 🌫️ BRUME - mystère, flou, suspense, ambiance onirique - 🌞 MIDI - lumière zénithale, ombres courtes, contraste fort<br>8. RYTHME : Partie 1 lente → Partie 2 intense → Partie 3 climax<br>9. MUSIQUE : Silence<br>10. DURÉE TOTALE : 18 secondes (3 x 6 secondes)<br>11. FORMAT : 2.39:1 (Cinémascope) ou 16:9<br>12. RÉSOLUTION : 8K minimum (7680x4320)<br>13. GRAIN : Léger grain argentique pour l'authenticité<br>14. COLOR GRADING : Teinte adaptée à l'ambiance (chaud pour romance, froid pour drame/mystère)</div>
+                
+                <div class="recap">
+                    <h4><i class="fas fa-clipboard-list"></i> FICHE DE TOURNAGE</h4>
+                    <div id="recapContent"><br>🎬 LA RENCONTRE<br>👥 Personnages : ELLE<br>📹 Plans : PLAN_MOYEN → GROS_PLAN → PLAN_MOYEN<br>🎥 Angle : 3-4<br>🌤️ Météo : brume<br>⏰ Période : midi<br>🎭 Genre : 🎭 Drame / Émotion<br>    </div>
+                </div>
+                
+                <div class="tips">
+                    <h4><i class="fas fa-lightbulb"></i> CONSEILS DE MISE EN SCÈNE</h4>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Utilisez le plan large pour installer le décor</li>
+                        <li><i class="fas fa-check-circle"></i> Le plan moyen pour le jeu des acteurs</li>
+                        <li><i class="fas fa-check-circle"></i> Le gros plan pour les émotions intenses</li>
+                        <li><i class="fas fa-check-circle" style="color: #ffd700;"></i> Variez les angles pour dynamiser la scène</li>
+                        <li><i class="fas fa-check-circle" style="color: #ffd700;"></i> La météo et la lumière définissent l'ambiance</li>
+                        <li><i class="fas fa-check-circle" style="color: #ffd700;"></i> Les dialogues doivent servir l'action, pas l'inverse</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 - CINEMA STUDIO | Courts-Métrages Cinématographiques | Ultra-réaliste 8K | James Cameron • Spielberg • Nolan</p>
+        </footer>
+    </div>
+
+    <script src="./CINEMA STUDIO - Générateur de Courts-Métrages_files/script.js"></script>
+
+
+</body></html>
